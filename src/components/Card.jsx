@@ -21,6 +21,9 @@ function Card(props) {
             />
             <div className={`${view === 'list' ? "flex flex-col" : ""}`}>
                 <h4 className="text-xl mt-2">{product?.attributes?.title}</h4>
+                {
+                    console.log(product?.attributes?.title)
+                }
                 <p className="text-xl mt-2"><b>${product?.attributes?.price}</b></p>
             </div>
         </div>

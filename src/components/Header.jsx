@@ -1,7 +1,10 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../App";
 
 function Header() {
   const location = useLocation();
+  const {cart} = useContext(CartContext)
 
   return (
     <header>
@@ -74,7 +77,7 @@ function Header() {
             </ul>
           </nav>
 
-          <p>10</p>
+          <p>{cart.length}</p>
         </div>
       </div>
     </header>

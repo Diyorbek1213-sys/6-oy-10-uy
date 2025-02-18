@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import Pagination from '@mui/material/Pagination';
 import { http } from "../axios"
 import Card from "../components/Card"
 import grid from '../assets/images/grid.svg'
@@ -10,6 +11,8 @@ function Products() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
   const formRef = useRef()
   const [view, setView] = useState('grid')
   const [filter, setFilter] = useState({
@@ -17,7 +20,7 @@ function Products() {
     company: "all",
     category: "all",
     order: "a-z",
-    price: 1000,
+    price: 100000,
     shipping: false
   })
 
@@ -41,10 +44,15 @@ function Products() {
       url = `/products?search=${filter.search}&category=${filter.category}&company=${filter.company}&order=${filter.order}&price=${filter.price}&shipping=${filter.shipping & 'on'}`
     }
 
+    if (searchParams.get('page')) {
+      setCurrentPage(searchParams.get('page'))
+    }
+
     http.get(url)
       .then(response => {
         if (response.status === 200) {
           setProducts(response?.data?.data)
+          setTotalPage(response?.data?.meta?.pagination.pageCount)
         }
       })
       .catch(error => {
@@ -55,10 +63,20 @@ function Products() {
       })
   }, [searchParams])
 
+  useEffect(() => {
+    http.get(`/products?page=${currentPage}`)
+    .then(response => {
+      if (response.status === 200) setProducts(response?.data?.data)
+    })
+  .catch(error => console.log(error))
+  .finally(() => setLoading(false))
+  }, [currentPage])
+
   function handleFilter(event) {
     event.preventDefault()
 
-    let url = `/products?search=${filter.search}&category=${filter.category}&company=${filter.company}&order=${filter.order}&price=${filter.price}&shipping=${filter.shipping & 'on'}`
+    let url = `/products?search=${filter.search}&category=${filter.category}&company=${filter.company}&order=${filter.order}&price=${filter.price}${filter.shipping ? '&shipping=on' : ''}`;
+
 
     setSearchParams({ ...filter, shipping: filter.shipping ? 'on' : '' }, false)
 
@@ -66,6 +84,7 @@ function Products() {
       .then(response => {
         if (response.status === 200) {
           setProducts(response?.data?.data)
+          setTotalPage(response?.data?.meta?.pagination.pageCount)
         }
       })
       .catch(error => {
@@ -87,6 +106,11 @@ function Products() {
       shipping: false
     })
     setSearchParams({})
+  }
+
+  function handlePaginate(event, target) {
+    setCurrentPage(target)
+    setSearchParams({page: target})
   }
 
   return (
@@ -171,6 +195,9 @@ function Products() {
         {
           !loading && products.length === 0 && <p>Sorry, no products matched your search...</p>
         }
+      </div>
+      <div className="flex justify-end my-10">
+        <Pagination onChange={handlePaginate} page={currentPage} count={totalPage} variant="outlined" />
       </div>
     </div>
   )
