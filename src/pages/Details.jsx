@@ -34,7 +34,7 @@ function Details() {
       color: selectedColor,
       product: product,
     }
-    
+
     let copied = [...cart]
     if (isExist) {
       copied = copied.map((value) => {
@@ -42,7 +42,7 @@ function Details() {
           value.count = Number(value.count)
           value.count += Number(count)
         }
-          return value
+        return value
       })
       setCart(copied)
     } else {
@@ -72,16 +72,20 @@ function Details() {
         <h3 className="text-[18px] mt-[5px]">${product?.attributes?.price}</h3>
         <h3 className="mt-[20px]">{product?.attributes?.description}</h3>
 
-        <div className="flex gap-3 mt-5">
-          {
-            product?.attributes?.colors.length > 0 && product?.attributes?.colors.map((color, index) => {
-              return <span key={index} style={{ backgroundColor: color, border: color == selectedColor ? "2px solid black" : "none" }} onClick={() => { setSelectedColor(color) }} className={`inline-block w-[30px] h-[30px] cursor-pointer rounded-full`}></span>
-            })
-          }
+        <div className="flex gap-3 mt-5 flex-col">
+          <p>Colors</p>
+          <div className="flex gap-3">
+            {
+              product?.attributes?.colors.length > 0 && product?.attributes?.colors.map((color, index) => {
+                return <span key={index} style={{ backgroundColor: color, border: color == selectedColor ? "2px solid black" : "none" }} onClick={() => { setSelectedColor(color) }} className={`inline-block w-[30px] h-[30px] cursor-pointer rounded-full`}></span>
+              })
+            }
+          </div>
         </div>
         <div>
           <label htmlFor="count">
-            <select className="border mt-[25px] p-2 w-[400px] rounded-md" value={count} onChange={(e) => setCount(e.target.value)}>
+            <p className="mt-[20px]">Amount</p>
+            <select className="border mt-[10px] p-2 w-[400px] rounded-md" value={count} onChange={(e) => setCount(e.target.value)}>
               <option>1</option>
               <option>2</option>
               <option>3</option>

@@ -118,12 +118,12 @@ function Products() {
       <form ref={formRef} className="grid grid-cols-4 gap-4 mt-10 bg-blue-100 p-5 rounded-lg">
         <div className="flex flex-col gap-2">
           <label>Search Products</label>
-          <input value={filter.search} onChange={(e) => { setFilter({ ...filter, search: e.target.value }) }} className="border rounded-md p-2 bg-white" type="text" />
+          <input value={filter.search} onChange={(e) => { setFilter({ ...filter, search: e.target.value }) }} className="border rounded-md p-2 bg-white border-[wheat]" type="text" />
         </div>
 
         <div className="flex flex-col gap-2">
           <label>Select Category</label>
-          <select value={filter.category} onChange={(e) => { setFilter({ ...filter, category: e.target.value }) }} className="border rounded-md p-2 bg-white">
+          <select value={filter.category} onChange={(e) => { setFilter({ ...filter, category: e.target.value }) }} className="border rounded-md p-2 bg-white border-[wheat]">
             <option>all</option>
             <option>Table</option>
             <option>Chairs</option>
@@ -133,7 +133,7 @@ function Products() {
 
         <div className="flex flex-col gap-2">
           <label>Select Company</label>
-          <select value={filter.company} onChange={(e) => { setFilter({ ...filter, company: e.target.value }) }} className="border rounded-md p-2 bg-white">
+          <select value={filter.company} onChange={(e) => { setFilter({ ...filter, company: e.target.value }) }} className="border rounded-md p-2 bg-white border-[wheat]">
             <option>all</option>
             <option>Modenza</option>
             <option>Luxora</option>
@@ -143,7 +143,7 @@ function Products() {
 
         <div className="flex flex-col gap-2">
           <label>Sort by</label>
-          <select value={filter.order} onChange={(e) => { setFilter({ ...filter, order: e.target.value }) }} className="border rounded-md p-2 bg-white">
+          <select value={filter.order} onChange={(e) => { setFilter({ ...filter, order: e.target.value }) }} className="border rounded-md p-2 bg-white border-[wheat]">
             <option>a-z</option>
             <option>z-a</option>
           </select>
@@ -156,15 +156,15 @@ function Products() {
 
         <div className="flex flex-col gap-2 text-center">
           <label>Free Shipping</label>
-          <input onChange={(e) => { setFilter({ ...filter, shipping: e.target.checked }) }} className="border rounded-md p-2 bg-white" type="checkbox" />
+          <input onChange={(e) => { setFilter({ ...filter, shipping: e.target.checked }) }} className="border rounded-md p-2 bg-white " type="checkbox" />
         </div>
 
         <div className="flex flex-col gap-2 text-center">
-          <button onClick={handleFilter} className="bg-blue-500 w-full p-1 cursor-pointer rounded-lg text-white">SEARCH</button>
+          <button onClick={handleFilter} className="bg-blue-500 w-full p-1 cursor-pointer rounded-lg text-white font-bold transition-all hover:bg-blue-600">SEARCH</button>
         </div>
 
         <div className="flex flex-col gap-2 text-center">
-          <button onClick={handleReset} type="reset" className="bg-purple-500 w-full p-1 cursor-pointer rounded-lg text-white">RESET</button>
+          <button onClick={handleReset} type="reset" className="bg-purple-500 w-full p-1 cursor-pointer rounded-lg text-white font-bold transition-all hover:bg-purple-600">RESET</button>
         </div>
       </form>
 
